@@ -8,7 +8,7 @@ var truckers = [{
   'pricePerKm': 0.05,
   'pricePerVolume': 5
 }, {
-  'id': 'f944a3ff-591b-4d5b-9b67-c7e08cba9791',
+  'id': '165d65ec-5e3f-488e-b371-d56ee100aa58',
   'name': 'geodis',
   'pricePerKm': 0.1,
   'pricePerVolume': 8.5
