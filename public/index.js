@@ -8,7 +8,7 @@ var truckers = [{
   'pricePerKm': 0.05,
   'pricePerVolume': 5
 }, {
-  'id': '165d65ec-5e3f-488e-b371-d56ee100aa58',
+  'id': 'f944a3ff-591b-4d5b-9b67-c7e08cba9791',
   'name': 'geodis',
   'pricePerKm': 0.1,
   'pricePerVolume': 8.5
@@ -19,6 +19,18 @@ var truckers = [{
   'pricePerVolume': 10
 }];
 
+function ShippingPrice(){
+  for (var i = 0; i < Object.keys(deliveries).length; i++) {
+    for (var j = 0; j < Object.keys(truckers).length; j++) {
+      if(deliveries[i].truckerId==truckers[j].id){
+        var volume = deliveries[i].volume * truckers[i].pricePerVolume ; 
+        var distance = deliveries[i].distance * truckers[i].pricePerKm;
+        var shipping_price = distance + volume;
+        deliveries[i].price=shipping_price;
+      }
+    }
+  }
+}
 //list of current shippings
 //useful for ALL exercises
 //The `price` is updated from exercice 1
@@ -141,6 +153,7 @@ const actors = [{
   }]
 }];
 
+ShippingPrice();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
