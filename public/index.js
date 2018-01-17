@@ -26,7 +26,17 @@ function ShippingPrice(reductionpercent, i ,j){
   shipping_price = shipping_price -((shipping_price * reductionpercent)/100);
 
   deliveries[i].price=shipping_price;
+
+  var commission = 0.3*shipping_price;
+  var insurance = commission/2;
+  var treasury = Math.floor(deliveries[i].distance/500);
+  var convargo = commission-(insurance+treasury);
+
+  deliveries[i].commission.insurance= insurance;
+  deliveries[i].commission.treasury= treasury;
+  deliveries[i].commission.convargo= convargo;
 }
+
 
 function DecreasingPrice(){
   for (var i = 0; i < Object.keys(deliveries).length; i++) {
@@ -51,6 +61,7 @@ function DecreasingPrice(){
     }
   }
 }
+
 //list of current shippings
 //useful for ALL exercises
 //The `price` is updated from exercice 1
@@ -68,6 +79,7 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
+    'treasury': 0,
     'convargo': 0
   }
 }, {
@@ -82,6 +94,7 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
+    'treasury': 0,
     'convargo': 0
   }
 }, {
@@ -96,6 +109,7 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
+    'treasury': 0,
     'convargo': 0
   }
 }];
