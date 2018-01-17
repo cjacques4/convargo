@@ -19,14 +19,34 @@ var truckers = [{
   'pricePerVolume': 10
 }];
 
-function ShippingPrice(){
+function ShippingPrice(reductionpercent, i ,j){
+  var volume = deliveries[i].volume * truckers[j].pricePerVolume;
+  var distance = deliveries[i].distance * truckers[j].pricePerKm;
+  var shipping_price = distance + volume;
+  shipping_price = shipping_price -((shipping_price * reductionpercent)/100);
+
+  deliveries[i].price=shipping_price;
+}
+
+function DecreasingPrice(){
   for (var i = 0; i < Object.keys(deliveries).length; i++) {
     for (var j = 0; j < Object.keys(truckers).length; j++) {
       if(deliveries[i].truckerId==truckers[j].id){
-        var volume = deliveries[i].volume * truckers[i].pricePerVolume ; 
-        var distance = deliveries[i].distance * truckers[i].pricePerKm;
-        var shipping_price = distance + volume;
-        deliveries[i].price=shipping_price;
+        if(deliveries[i].volume<5){
+          ShippingPrice(0, i,j);
+        }
+
+        else if(deliveries[i].volume<10){
+          ShippingPrice(10, i,j);
+        }
+
+        else if(deliveries[i].volume<25){
+          ShippingPrice(30,i,j);
+        }
+        
+        else {
+          ShippingPrice(50,i,j);
+        }
       }
     }
   }
@@ -153,7 +173,7 @@ const actors = [{
   }]
 }];
 
-ShippingPrice();
+DecreasingPrice();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
