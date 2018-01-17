@@ -20,21 +20,26 @@ var truckers = [{
 }];
 
 function ShippingPrice(reductionpercent, i ,j){
+  if(deliveries[i].options.deductibleReduction == true){
+    var charge = Math.ceil(deliveries[i].volume);
+  }
+
+
   var volume = deliveries[i].volume * truckers[j].pricePerVolume*(1-(reductionpercent/100));
   var distance = deliveries[i].distance * truckers[j].pricePerKm;
   var shipping_price = distance + volume;
   //shipping_price = shipping_price -((shipping_price * reductionpercent)/100);
 
-  deliveries[i].price=shipping_price;
+  deliveries[i].price=shipping_price+charge;
 
   var commission = 0.3*shipping_price;
   var insurance = commission/2;
-  var treasury = Math.floor(deliveries[i].distance/500);
-  var convargo = commission-(insurance+treasury);
+  var treasury = Math.ceil(deliveries[i].distance/500);
+  var convargo = commission-(insurance+treasury)+charge;
 
-  deliveries[i].commission.insurance= insurance;
-  deliveries[i].commission.treasury= treasury;
-  deliveries[i].commission.convargo= convargo;
+  deliveries[i].commission.insurance = insurance;
+  deliveries[i].commission.treasury = treasury;
+  deliveries[i].commission.convargo = convargo;
 }
 
 
@@ -140,7 +145,7 @@ const actors = [{
     'amount': 0
   }]
 }, {
-  'rentalId': '65203b0a-a864-4dea-81e2-e389515752a8',
+  'deliveryId': '65203b0a-a864-4dea-81e2-e389515752a8',
   'payment': [{
     'who': 'shipper',
     'type': 'debit',
@@ -163,7 +168,7 @@ const actors = [{
     'amount': 0
   }]
 }, {
-  'rentalId': '94dab739-bd93-44c0-9be1-52dd07baa9f6',
+  'deliveryId': '94dab739-bd93-44c0-9be1-52dd07baa9f6',
   'payment': [{
     'who': 'shipper',
     'type': 'debit',
