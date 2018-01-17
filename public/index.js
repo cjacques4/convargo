@@ -20,10 +20,10 @@ var truckers = [{
 }];
 
 function ShippingPrice(reductionpercent, i ,j){
-  var volume = deliveries[i].volume * truckers[j].pricePerVolume;
+  var volume = deliveries[i].volume * truckers[j].pricePerVolume*(1-(reductionpercent/100));
   var distance = deliveries[i].distance * truckers[j].pricePerKm;
   var shipping_price = distance + volume;
-  shipping_price = shipping_price -((shipping_price * reductionpercent)/100);
+  //shipping_price = shipping_price -((shipping_price * reductionpercent)/100);
 
   deliveries[i].price=shipping_price;
 
