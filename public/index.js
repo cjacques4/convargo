@@ -20,8 +20,9 @@ var truckers = [{
 }];
 
 function ShippingPrice(reductionpercent, i ,j){
+  var charge =0;
   if(deliveries[i].options.deductibleReduction == true){
-    var charge = Math.ceil(deliveries[i].volume);
+     charge = Math.ceil(deliveries[i].volume);
   }
 
 
@@ -30,7 +31,7 @@ function ShippingPrice(reductionpercent, i ,j){
   var shipping_price = distance + volume;
   //shipping_price = shipping_price -((shipping_price * reductionpercent)/100);
 
-  deliveries[i].price=shipping_price+charge;
+  deliveries[i].price= shipping_price+charge;
 
   var commission = 0.3*shipping_price;
   var insurance = commission/2;
@@ -40,10 +41,19 @@ function ShippingPrice(reductionpercent, i ,j){
   deliveries[i].commission.insurance = insurance;
   deliveries[i].commission.treasury = treasury;
   deliveries[i].commission.convargo = convargo;
+  for (var k = 0; k < Object.keys(actors).length; k++) {
+    if(deliveries[i].id == actors[k].deliveryId){
+      actors[k].payment[0].amount = shipping_price + charge;
+      actors[k].payment[1].amount = shipping_price-commission;
+      actors[k].payment[2].amount = insurance;
+      actors[k].payment[3].amount = treasury;
+      actors[k].payment[4].amount = convargo;
+    }
+  }
 }
 
 
-function DecreasingPrice(){
+function DecreasingPrice(i,j){
   for (var i = 0; i < Object.keys(deliveries).length; i++) {
     for (var j = 0; j < Object.keys(truckers).length; j++) {
       if(deliveries[i].truckerId==truckers[j].id){
@@ -178,11 +188,11 @@ const actors = [{
     'type': 'credit',
     'amount': 0
   }, {
-    'who': 'treasury',
+    'who': 'insurance',
     'type': 'credit',
     'amount': 0
-  }, {
-    'who': 'insurance',
+  },{
+    'who': 'treasury',
     'type': 'credit',
     'amount': 0
   }, {
